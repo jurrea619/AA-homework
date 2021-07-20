@@ -1,3 +1,5 @@
+require 'byebug'
+
 class PolyTreeNode
 
     attr_accessor :value, :children
@@ -46,4 +48,44 @@ class PolyTreeNode
         end
     end
 
+=begin
+   Phase 4: Searching
+Write a #dfs(target_value) method which takes a value to search for and performs the search. Write this recursively.
+First, check the value at this node. If a node's value matches the target value, return the node.
+If not, iterate through the #children and repeat.
+Write a #bfs(target_value) method to implement breadth first search.
+You will use a local Array variable as a queue to implement this.
+First, insert the current node (self) into the queue.
+Then, in a loop that runs until the array is empty:
+Remove the first node from the queue,
+Check its value,
+Push the node's children to the end of the array.
+Prove to yourself that this will check the nodes in the right order. Draw it out. Show this explanation to your TA.    
+=end
+
+    # dfs method takes a target value to search for and performs search recursively
+    def dfs(target_value)
+        # base case, return this node if value matches target
+        return self if self.value == target_value
+    
+        # iterate through children and repeat
+        self.children.each do |child|
+            result = child.dfs(target_value)
+            return result unless result.nil?
+        end
+        # all children searched and target not found, return nil
+        nil
+    end
+
+
+    def inspect
+        self.value.inspect
+    end
+end
+
+if __FILE__ == $PROGRAM_NAME
+    node1 = PolyTreeNode.new(1)
+    node2 = PolyTreeNode.new(2)
+    node2.parent = node1
+    node1.dfs(2)
 end
