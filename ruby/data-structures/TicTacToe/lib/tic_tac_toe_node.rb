@@ -1,17 +1,21 @@
 require_relative 'tic_tac_toe'
-require 'byebug'
-
+=begin
+  TicTacToeNode class represents a current state of the game, and all possible
+  states of the game from that position as its child nodes
+=end
 class TicTacToeNode
 
   attr_reader :board, :next_mover_mark, :prev_move_pos
 
+  # initialize current board state, current player mark, and previous position
   def initialize(board, next_mover_mark, prev_move_pos = nil)
     @board = board
     @next_mover_mark = next_mover_mark
     @prev_move_pos = prev_move_pos
   end
 
-  # method to check if current state is lost, or could still lose
+  # check if player has lost game, or will lose game assuming opponent
+  # plays perfectly
   def losing_node?(evaluator)
     # if board is over AND winner is not us, we lost
     if board.over?
@@ -27,7 +31,7 @@ class TicTacToeNode
     end
   end
 
-
+  # check has won game, or will win assuming player plays perfectly
   def winning_node?(evaluator)
     # if game over and current player is winner, return true. False otherwise
     if board.over?
@@ -52,7 +56,6 @@ class TicTacToeNode
     (0..2).each do |row|
       (0..2).each do |col|
         current_pos = [row,col]
-        # byebug
         # skip position if not empty
         next unless board.empty?(current_pos)
         # at each empty position, create node by dup'ing board, and put next_mover_mark
