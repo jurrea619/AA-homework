@@ -1,4 +1,3 @@
-require 'byebug'
 # Employee class with basic info(name, title, salary, boss)
 class Employee
     attr_reader :name, :title, :salary, :boss
@@ -28,6 +27,8 @@ class Manager < Employee
     end
 end
 
+# Testing
+if __FILE__ == $PROGRAM_NAME
 ned = Employee.new('Ned', 1000000, 'Founder', nil)
 darren = Manager.new('Darren', 78000, 'TA Manager', 'Ned', [])
 shawna = Employee.new('Shawna', 12000, 'TA', 'Darren')
@@ -37,3 +38,4 @@ darren.employees_assigned = [shawna, david]
 p ned.bonus(5) # => 500_000
 p darren.bonus(4) # => 88_000
 p david.bonus(3) # => 30_000
+end
