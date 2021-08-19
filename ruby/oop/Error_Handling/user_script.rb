@@ -2,8 +2,8 @@ require_relative 'super_useful'
 
 feed_me_a_fruit
 
-sam = BestFriend.new('', 1, '')
+joshua = BestFriend.new('Megan', 5, 'Exercise')
 
-sam.talk_about_friendship
-sam.do_friendstuff
-sam.give_friendship_bracelet
+joshua.talk_about_friendship
+joshua.do_friendstuff
+joshua.give_friendship_bracelet
