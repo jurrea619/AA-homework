@@ -2,7 +2,7 @@ require_relative 'piece'
 
 class Pawn < Piece
     def symbol
-        return "P"
+        return "p"
     end
 
     def moves

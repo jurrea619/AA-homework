@@ -5,7 +5,7 @@ class Rook < Piece
     include Slidable
 
     def symbol
-        return "R"
+        return "r"
     end
 
     private

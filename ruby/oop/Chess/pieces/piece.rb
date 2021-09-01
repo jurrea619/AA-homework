@@ -22,11 +22,11 @@ class Piece
     end
 
     def to_s
-        return "#{symbol}"
+        return " #{symbol} "
     end
 
-    def inspect
-        # self.class.inspect
-        to_s.inspect
-    end
+    # def inspect
+    #     # self.class.inspect
+    #     to_s.inspect
+    # end
 end
