@@ -7,10 +7,10 @@ class Board
         build_board(fill)
     end
 
+    # given current colors turn and piece, check move is valid then perform move
     def move_piece(turn_color, start_pos, end_pos)
         raise "No piece at position" if empty?(start_pos)
         raise "Invalid position" if !valid_pos?(end_pos)
-
         piece = self[start_pos]
         # check that piece being moved is same color as turn color
         if piece.color != turn_color
@@ -19,13 +19,13 @@ class Board
             raise "This piece cannot move there"
         # check that piece grabbed can move to end pos
         elsif !piece.valid_moves.include?(end_pos)
-            raise "Piece cannot move into check"
+            raise "Invalid move. Player would still be in check"
         end
         # update board and update piece's pos
         move_piece!(start_pos, end_pos)
     end
 
-    # method moves pieces without checking. Used for with dup_board
+    # method moves pieces without checking. Used also with dup_board
     def move_piece!(start_pos, end_pos)
         piece = self[start_pos]
         self[start_pos] = null
@@ -72,7 +72,15 @@ class Board
 
     # check if game is in checkmate for given color
     def checkmate?(color)
-        return true if in_check?(color) # && !valid_moves for player pieces
+        if in_check?(color)
+          # no valid_moves for player pieces
+          colored_pieces(color).each do |piece|
+            return false if !piece.valid_moves.empty?
+          end
+          return true
+        else
+            return false
+        end
     end
 
     # return king from list of all pieces on board
@@ -129,5 +137,10 @@ class Board
     def all_pieces
         # flatten 2d array and remove all NullPieces
         @grid.flatten.reject {|p| p.empty?}
+    end
+
+    # return array of only given color's pieces
+    def colored_pieces(color)
+        all_pieces.select {|p| p.color == color}
     end
 end

@@ -32,13 +32,12 @@ MOVES = {
 
 class Cursor
 
-  attr_reader :cursor_pos, :board, :selected
+  attr_reader :cursor_pos, :board, :selected, :debug
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
     @board = board
     @selected = false
-    @debug = false
   end
 
   def get_input
@@ -81,15 +80,7 @@ class Cursor
     case key
     when :return, :space
       toggle_selected # useful for board rendering state of play
-      cursor_pos # return current cursor position selected
-      if @debug
-        piece = @board[cursor_pos]
-        puts "Chosen #{piece.class} at pos #{piece.pos}"
-        puts "Available moves:\n"
-        p piece.valid_moves
-        puts "#{piece.color} in check?: #{@board.in_check?(piece.color)}"
-        sleep(10)
-      end
+      @cursor_pos # return current cursor position selected
     when :up, :down, :left, :right
       # call #update_pos with the appropriate movement difference 
       # from MOVES and return nil (in case of :left, :right, :up, and :down), 
@@ -104,6 +95,7 @@ class Cursor
     end
   end
 
+  # update cursor position with given diff in direction
   def update_pos(diff)
     dx, dy = diff
     new_pos = [@cursor_pos[0] + dx, @cursor_pos[1] + dy]
@@ -111,6 +103,7 @@ class Cursor
     @cursor_pos = new_pos if @board.valid_pos?(new_pos)
   end
 
+  # selected boolean used for knowing user turn status
   def toggle_selected
     @selected = !@selected
   end
