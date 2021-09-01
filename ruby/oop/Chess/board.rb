@@ -2,21 +2,32 @@ require_relative 'pieces'
 
 class Board
     attr_accessor :grid
-    def initialize
+    def initialize(fill = true)
         @null = NullPiece.instance # singleton instance for empty spaces
-        fill_board
+        build_board(fill)
     end
 
     def move_piece(turn_color, start_pos, end_pos)
         raise "No piece at position" if empty?(start_pos)
-        raise "Cannot move piece there" if !valid_pos?(end_pos)
+        raise "Invalid position" if !valid_pos?(end_pos)
 
-        # check that piece being moved is same color as turn color
-        # check that piece grabbed can move to end pos
         piece = self[start_pos]
-        raise "Cannot move other color's pieces" if piece.color != turn_color
-        raise "Piece cannot move there" if !piece.valid_moves.include?(end_pos)
+        # check that piece being moved is same color as turn color
+        if piece.color != turn_color
+            raise "Cannot move other color's pieces"
+        elsif !piece.moves.include?(end_pos)
+            raise "This piece cannot move there"
+        # check that piece grabbed can move to end pos
+        elsif !piece.valid_moves.include?(end_pos)
+            raise "Piece cannot move into check"
+        end
         # update board and update piece's pos
+        move_piece!(start_pos, end_pos)
+    end
+
+    # method moves pieces without checking. Used for with dup_board
+    def move_piece!(start_pos, end_pos)
+        piece = self[start_pos]
         self[start_pos] = null
         self[end_pos] = piece
         piece.pos = end_pos
@@ -69,12 +80,24 @@ class Board
         all_pieces.find {|p| p.class == King && p.color == color}
     end
 
+    # return deep dup of current board state
+    def dup
+        dup_board = Board.new(false) # board filled will Null Pieces
+        # cycle through all pieces and dup with dup_board
+        all_pieces.each do |piece|
+            piece.class.new(piece.color, dup_board, piece.pos)
+        end
+        # return duplicated board
+        return dup_board
+    end
+
     private
     attr_reader :null
 
     # initial set-up for chess board
-    def fill_board
+    def build_board(fill_board)
         @grid = Array.new(8) { Array.new(8,null) }
+        return unless fill_board == true
         fill_pawns
         fill_back_rows
     end

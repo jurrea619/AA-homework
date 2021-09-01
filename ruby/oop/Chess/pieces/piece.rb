@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Piece
     attr_accessor :pos
     attr_reader :color, :board
@@ -10,7 +12,10 @@ class Piece
     end
 
     def valid_moves
-        moves
+        # reject any possible move that leaves us in check
+        moves.reject do |end_pos| 
+            move_into_check?(end_pos)
+        end
     end
 
     def symbol
@@ -25,8 +30,11 @@ class Piece
         return " #{symbol} "
     end
 
-    # def inspect
-    #     # self.class.inspect
-    #     to_s.inspect
-    # end
+    private
+    # method returns true if move leaves player in check
+    def move_into_check?(end_pos)
+        dup_board = @board.dup
+        dup_board.move_piece!(@pos, end_pos)
+        dup_board.in_check?(@color)
+    end
 end

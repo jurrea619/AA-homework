@@ -38,6 +38,7 @@ class Cursor
     @cursor_pos = cursor_pos
     @board = board
     @selected = false
+    @debug = false
   end
 
   def get_input
@@ -79,7 +80,16 @@ class Cursor
   def handle_key(key)
     case key
     when :return, :space
-      toggle_selected
+      toggle_selected # useful for board rendering state of play
+      cursor_pos # return current cursor position selected
+      if @debug
+        piece = @board[cursor_pos]
+        puts "Chosen #{piece.class} at pos #{piece.pos}"
+        puts "Available moves:\n"
+        p piece.valid_moves
+        puts "#{piece.color} in check?: #{@board.in_check?(piece.color)}"
+        sleep(10)
+      end
     when :up, :down, :left, :right
       # call #update_pos with the appropriate movement difference 
       # from MOVES and return nil (in case of :left, :right, :up, and :down), 

@@ -32,7 +32,7 @@ class Display
     end
 
     def build_row(row, row_idx)
-        print (8-row_idx) # row numbers
+        print "#{8-row_idx} " # row numbers
         # iterate through each row piece by piece
         row.each_with_index do |piece, col_idx|
         # call to_s method for each, coloring dependant on coord pos
@@ -44,12 +44,14 @@ class Display
 
     # add labels at bottom row
     def column_labels
-        print " "
+        print "  "
         ('a'..'h').each do |col|
             print " #{col} "
         end
     end
 
+    # set background for square at input position
+    # separate color for cursor position, as well as selected position
     def get_square_color(pos)
         if @cursor.cursor_pos == pos && @cursor.selected
             background = :green
