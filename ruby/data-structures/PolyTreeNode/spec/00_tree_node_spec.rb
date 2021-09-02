@@ -1,5 +1,5 @@
 require 'rspec'
-require '00_tree_node'
+require 'tree_node'
 
 describe PolyTreeNode do
   let(:node1) { PolyTreeNode.new('root') }
@@ -51,7 +51,7 @@ describe PolyTreeNode do
       before { node3.parent = node2 }
 
       it "should set the node's parent to the new parent" do
-        expect(node3.parent).to equal(node2)
+        expect(node3.parent).to eq(node2)
       end
 
       it "should add the node to the new parent's children" do

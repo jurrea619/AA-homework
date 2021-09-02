@@ -7,8 +7,8 @@ class Game
         @board = Board.new
         @display = Display.new(@board)
         @players = {
-            white: HumanPlayer.new(:white, @display),
-            black: HumanPlayer.new(:black, @display)
+            white: HumanPlayer.new("Joshua", :white, @display),
+            black: HumanPlayer.new("Megan", :black, @display)
         }
         @current_player = :white
     end

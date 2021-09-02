@@ -61,7 +61,7 @@ class TicTacToeNode
         # at each empty position, create node by dup'ing board, and put next_mover_mark
         dup_board = board.dup
         dup_board[current_pos] = self.next_mover_mark
-        next_mover_mark = (self.next_mover_mark == :x ? :o : :x)
+        next_mover_mark = self.next_mover_mark == :x ? :o : :x
         all_possible_moves << TicTacToeNode.new(dup_board, next_mover_mark, current_pos)
       end
     end

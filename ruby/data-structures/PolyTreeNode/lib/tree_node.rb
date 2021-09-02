@@ -17,10 +17,10 @@ class PolyTreeNode
     # set parent property and add node to parent's array of children
     # unless setting parent to nil
     def parent=(new_parent)
-        # if new_parent is the same as current, then return
+        # if new_parent is already same as current parent, then return
         return if self.parent == new_parent
 
-        # detach current node from parents children before changing parent
+        # detach current node from parent's children array before changing
         if self.parent
             self.parent.children.delete(self)
         end
