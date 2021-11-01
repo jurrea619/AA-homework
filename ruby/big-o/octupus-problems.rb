@@ -12,7 +12,7 @@ def sluggish(arr)
             next if i == j
             longest = false if str2.length > str.length
         end
-        return [str, if] if longest
+        return [str, i] if longest
     end
 end
 
