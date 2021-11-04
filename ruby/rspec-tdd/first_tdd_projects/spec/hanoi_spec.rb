@@ -5,7 +5,7 @@ describe TowersOfHanoi do
 
     describe '#render' do
     it "draws stacks properly" do 
-        expect(game.render).to eq("3 2 1")
+        expect(game.render).to eq("Tower 0: |3 2 1\nTower 1: |\nTower 2: |\n")
     end
     end
 
@@ -17,7 +17,9 @@ describe TowersOfHanoi do
     end
 
     describe '#won?' do
-    it 'is not true at start of game'
+    it 'is not true at start of game' do 
+        expect(game.won?).to eq(false)
+        end
     it 'is true when all discs on tower 1'
     it 'is true when all discs on tower 2'
     end

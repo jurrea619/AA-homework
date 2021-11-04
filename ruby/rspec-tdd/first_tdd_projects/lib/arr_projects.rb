@@ -41,9 +41,8 @@ end
 # stock_picker method takes array of stock prices (days 0,1,...) and outputs
 # most profitable pair of days on which to first buy and then sell the stock
 def stock_picker(arr)
-    best_pair = nil
-    best_profit = 0
-
+    best_pair, best_profit = nil, 0
+    
     # iterate through array
     arr.each_index do |buy_date|
         arr.each_index do |sell_date|
